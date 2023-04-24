@@ -1,4 +1,11 @@
 #include<stdio.h>
+#include<signal.h>
+#include"controller/chat_server_controller.h"
+
+void handle_pipe(int sig)
+{
+     
+}
 
 int main(int argc,char ** argv)
 {
@@ -7,38 +14,23 @@ int main(int argc,char ** argv)
         printf("Please input port ip to start server\n");
         return -1;
     }
-
+    handle_pipe_main();
+    
     int port = atoi(argv[1]);
     const char *ip = argv[2];
 
-    printf("Chat server start with port:%d ip %s\n",port,ip);
+    printf("Chat server start with port:%d ip %s\n",port,ip); 
 
-    int sockfd = chat_socket();
-    if(sockfd = -1)
-    {
-        return -1;
-    }
+    int ret = chat_start_server(port,ip);
+    return ret;
+}
 
-    if((sockfd == chat_bind(sockfd,port,ip)) == -1)
-    {
-        return -1;
-    }
-
-    printf("waiting client to connect server....\n");
-    
-    while (1)
-    {
-        int c_port = -1;
-        char c_ip[16] = '\0';
-        //等待客户端连接
-
-        int conn = chat_accept(sockfd);
-        if(conn == -1)
-        {
-            continue;
-        }
-
-       printf("accept client port:%d ip:%s connect\n",c_port,c_ip);
-    }
-
+//处理客户端pipe
+void handle_pipe_main()
+{
+    struct sigaction sa;
+    sa.sa_handler = handle_pipe;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGPIPE,&sa,NULL);
 }

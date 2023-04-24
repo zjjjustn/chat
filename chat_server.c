@@ -54,7 +54,6 @@ int chat_accept(int sockfd,int *client_port,char * client_ip)
         return -1;
     }
     *client_port = ntohs(client_sockaddr.sin_port);
-    const char *ip = inet_ntoa(client_sockaddr.sin_addr);
     memcpy(client_ip,inet_ntoa(client_sockaddr.sin_addr),15);
 
 

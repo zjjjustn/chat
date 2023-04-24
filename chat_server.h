@@ -6,9 +6,10 @@
 #include<pthread.h>
 #include<stdlib.h>
 #include<ctype.h>
+#include<arpa/inet.h>
 
 int chat_socket();
 
 int chat_bind(int sockfd,const int port,const char *ip);
 
-int chat_accept(int sockfd);
+int chat_accept(int sockfd,int *client_port,char * client_ip);
