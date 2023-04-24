@@ -23,9 +23,13 @@ int main(int argc,char ** argv)
     {
         return -1;
     }
+
+    printf("waiting client to connect server....\n");
     
     while (1)
     {
+        int c_port = -1;
+        char c_ip[16] = '\0';
         //等待客户端连接
 
         int conn = chat_accept(sockfd);
@@ -33,6 +37,8 @@ int main(int argc,char ** argv)
         {
             continue;
         }
+
+       printf("accept client port:%d ip:%s connect\n",c_port,c_ip);
     }
 
 }

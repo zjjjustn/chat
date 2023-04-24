@@ -41,7 +41,7 @@ int chat_bind(int sockfd,const int port,const char * ip)
     return sockfd;
 }
 
-int chat_accept(int sockfd)
+int chat_accept(int sockfd,int *client_port,char * client_ip)
 {
     struct sockaddr_in client_sockaddr;
     int length = sizeof(client_sockaddr);
@@ -53,6 +53,12 @@ int chat_accept(int sockfd)
         perror("accept errror");
         return -1;
     }
+    *client_port = ntohs(client_sockaddr.sin_port);
+    const char *ip = inet_ntoa(client_sockaddr.sin_addr);
+    memcpy(client_ip,inet_ntoa(client_sockaddr.sin_addr),15);
+
+
+    return conn;
 }
 
 
