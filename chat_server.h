@@ -9,4 +9,6 @@
 
 int chat_socket();
 
-int chat_bind(const int port,const char *ip);
+int chat_bind(int sockfd,const int port,const char *ip);
+
+int chat_accept(int sockfd);

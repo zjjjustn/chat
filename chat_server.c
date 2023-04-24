@@ -12,22 +12,49 @@ int chat_socket()
 
 }
 
-int chat_bind(const int port,const char * ip)
+int chat_bind(int sockfd,const int port,const char * ip)
 {
-    if(port <= 0 || ip == NULL)
+    if(port <= 0 || ip == NULL || sockfd <= 0)
     {
         return -1;
     }
 
-    struct socketaddr_in server_socketaddr;
-    server_socketaddr.sin_family = AF_INET;
-    server_socketaddr.sin_port(port);
-    server_socketaddr.sin_addr.s_addr = inet_addr(ip);
+    struct sockaddr_in server_sockaddr;
+    server_sockaddr.sin_family = AF_INET;
+    server_sockaddr.sin_port = htons(port);
+    server_sockaddr.sin_addr.s_addr = inet_addr(ip);
 
-    struct socketaddr_in client_socketaddr;
-    int length = sizeof(client_socketaddr);
+   
 
+    int opt = 1;
+//端口复用
+    setsockopt(sockfd,SOL_SOCKET,SO_REUSEADDR,&opt,sizeof(opt));
+
+    if(bind(sockfd,(struct sockaddr *)&server_sockaddr,sizeof(server_sockaddr)) == -1)
+    {
+        perror("bind Error");
+        return -1;
+    }
+
+    listen(sockfd,36);
+
+    return sockfd;
 }
+
+int chat_accept(int sockfd)
+{
+    struct sockaddr_in client_sockaddr;
+    int length = sizeof(client_sockaddr);
+
+    int conn = accept(sockfd,(struct sockaddr*)&client_sockaddr,&length);
+
+    if(-1 == conn)
+    {
+        perror("accept errror");
+        return -1;
+    }
+}
+
 
 // #define SERVPORT 8080
 
