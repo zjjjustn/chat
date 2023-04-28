@@ -56,3 +56,19 @@ void delete_node(Link *head,int sockfd)
     return 0; 
 
 }
+
+void display_list(Link head)
+{
+    Link p;
+    if(head == NULL)
+    {
+        printf("链表为空:\n");
+        return;
+    }
+
+    while(p != NULL)
+    {
+        printf("client: ip: %s port: %%fd:%d\n", p->ip,p->port,p->sockfd);
+        p = p->next;
+    }
+}

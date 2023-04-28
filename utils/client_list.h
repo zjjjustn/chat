@@ -19,4 +19,8 @@ int create_node(Link *newnode);
 
 void insert_list_head(Link *head, Link newnode);
 
-void delete_node(Link *head,char *id);
+void delete_node(Link *head,int sockfd);
+
+void display_list(Link head);
+
+int find_client(int sockfd);
