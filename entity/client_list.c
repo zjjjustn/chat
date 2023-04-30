@@ -72,3 +72,19 @@ void display_list(Link head)
         p = p->next;
     }
 }
+
+void destory(Link head)
+{
+    Link p = head;
+    if(head == NULL)
+    {
+        return;
+    }
+
+    while(p != NULL)
+    {
+        free(p);
+        p = NULL;
+        p = p->next;
+    }
+}

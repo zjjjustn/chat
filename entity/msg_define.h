@@ -1,0 +1,32 @@
+#pragma once 
+#define LOGIN 0x10
+#define REGISTER 0x11
+
+#define SUCCESS 1
+#define WRONG -1
+
+
+//协议头
+struct msg_header
+{
+    unsigned char header[4];
+
+    unsigned short control_mask;
+
+    unsigned int content_len;
+
+    unsigned short reservert;
+};
+
+struct user_struct
+{
+    unsigned char user_name[32];
+    unsigned char pass_word[32];
+};
+
+struct server_replay
+{
+    unsigned char error_msg[1024];
+    unsigned char error_code;
+};
+

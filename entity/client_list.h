@@ -23,4 +23,4 @@ void delete_node(Link *head,int sockfd);
 
 void display_list(Link head);
 
-int find_client(int sockfd);
+void destory(Link head);
