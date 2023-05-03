@@ -30,3 +30,11 @@ struct server_replay
     unsigned char error_code;
 };
 
+
+struct oline_user
+{
+    unsigned char user_names[1023][32];
+
+    unsigned short count;
+};
+

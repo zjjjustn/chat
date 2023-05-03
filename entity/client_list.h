@@ -1,11 +1,8 @@
 #pragma once
-
-#include"conn_client_info.h"
-
 struct client_info
 {
-    char ip[16];
-    int port;
+    char user_name[16];
+    char pass_word[16];
     int sockfd;
 
     struct client_info *next;   

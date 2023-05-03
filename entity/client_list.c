@@ -68,7 +68,7 @@ void display_list(Link head)
 
     while(p != NULL)
     {
-        printf("client: ip: %s port: %%fd:%d\n", p->ip,p->port,p->sockfd);
+        printf("client: ip: %s port: %%fd:%d\n", p->user_name,p->pass_word,p->sockfd);
         p = p->next;
     }
 }

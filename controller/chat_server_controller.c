@@ -40,18 +40,67 @@ void *chat_server_controller(void *arg)
 {
     int sockfd = *(int*)(arg);
     int head_len = sizeof(struct msg_header);
+    struct msg_header header;
     while(1)
     {
-        char head_buf[head_len];
-        int r_len = recv(sockfd,head_buf,head_len,0);
-        if(r_len == 0)
+        int r_len = recv(sockfd,&header,head_len,0);
+        if(r_len == 0 || r_len == -1)
         {
+            //客户端关闭连接
+            printf("client cut connection!\n");
+            break;
         }
-        else if(r_len == -1)
+        //解析消息头
+        if(strncmp((const char*)header.header,"SQJY",4) == 0)
         {
-
+            //符合协议处理消息
+            if(verify_header(header) == -1)
+            {
+                continue;
+            }
+            //接收正文
+            char content[header.content_len];
+            r_len = recv(sockfd,content,header.content_len,0);
+            if(r_len == 0 || r_len == -1)
+            {
+                printf("client cut connection!\n");
+                break;
+            }
+            //传递下一层处理    
+            process_client_msg(sockfd,content,header.control_mask);
+        }
+        else{
+            printf("client %d send error header:%s\n",sockfd,header.header);
+            break;
         }
     }
+    delect_node(&client_head,sockfd);
+    close(sockfd);
     pthread_exit(NULL);
 }
- 
+//校验消息头
+int verify_header(struct msg_header header)
+{
+    if(header.content_len == -1)
+    {
+        return -1;
+    }
+    if(header.control_mask == -1)
+    {
+        return -1;
+    }
+}
+
+void process_client_msg(int sockfd,const char * content,unsigned short control_mask)
+{
+    switch(control_mask)
+    {
+        case LOGIN:
+            break;
+        case REGISTER:
+            break;
+        
+        default:
+            break;
+    }
+}
