@@ -1,5 +1,7 @@
 #include"chat_server_controller.h"
 #include"client_list.h"
+#include"msg_send_service.h" 
+#include"msg_define.h"
 #include<stdio.h>
 
 Link client_head = NULL;
@@ -7,19 +9,19 @@ Link client_head = NULL;
 int chat_start_server(const int port,const char *ip)
 {
     int sockfd = chat_socket();
-    if(sockfd = -1)
+    if(sockfd == -1)
     {
         return -1;
     }
 
     if((sockfd == chat_bind(sockfd,port,ip)) == -1)
-    {
+    { 
         return -1;
     }
 
     printf("waiting client to connect server....\n");
     
-    while (1)
+    while(1)
     {
         int c_port;
         char c_ip[16] = '\0';
@@ -100,9 +102,11 @@ void process_client_msg(int sockfd,const char * content,unsigned short control_m
     switch(control_mask)
     {
         case LOGIN:
-            break;
+            break; 
         case REGISTER:
             break;
+        case MSG_SEND:
+            send_msg_handle(sockfd,content);
         
         default:
             break;

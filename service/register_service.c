@@ -1,6 +1,7 @@
 #include"register_service.h"
 #include<stdio.h>
 #include<string.h>
+#include<sys/socket.h>
 #include"msg_define.h"
 #include"client_list.h"
 #include"up_line_user_service.h"

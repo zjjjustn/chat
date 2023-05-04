@@ -39,3 +39,9 @@ struct oline_user
     unsigned short count;
 };
 
+struct msg_define
+{
+    unsigned char user_name[1024];
+    unsigned char msg[1024];
+    int is_send_all;
+};
