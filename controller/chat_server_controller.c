@@ -1,4 +1,5 @@
 #include"chat_server_controller.h"
+#include"client_list.h"
 #include<stdio.h>
 
 Link client_head = NULL;
@@ -31,7 +32,7 @@ int chat_start_server(const int port,const char *ip)
         }
 
        printf("accept client port:%d ip:%s connect\n",c_port,c_ip);
-       start_detach_thread(NULL,chat_server_controller,&conn)
+       start_detach_thread(NULL,chat_server_controller,&conn);
     }
 
 }
@@ -76,6 +77,9 @@ void *chat_server_controller(void *arg)
     }
     delect_node(&client_head,sockfd);
     close(sockfd);
+    //send all upline
+    send_up_line_users(-1,1);
+
     pthread_exit(NULL);
 }
 //校验消息头

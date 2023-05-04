@@ -1,6 +1,7 @@
 #pragma once 
 #define LOGIN 0x10
 #define REGISTER 0x11
+#define UPLINE_USERS 0x22
 
 #define SUCCESS 1
 #define WRONG -1

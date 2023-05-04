@@ -1,6 +1,6 @@
 #include<stdio.h>
-#include<signal.h>
-#include"controller/chat_server_controller.h"
+#include<signal.h>  
+#include"chat_server_controller.h"
 
 void handle_pipe(int sig)
 {
