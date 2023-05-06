@@ -57,4 +57,12 @@ struct msg_define
     int is_send_all;
 };
 
-struct file
+//文件信息  消息头+文件信息+文件流
+struct file_info_content
+{
+    unsigned char file_name[1024];
+
+    unsigned long file_size;
+
+    unsigned int file_buffer_length;
+};

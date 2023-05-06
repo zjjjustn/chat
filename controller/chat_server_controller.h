@@ -2,7 +2,7 @@
 
 #include<stdio.h>
 #include"../frame/chat_server.h"
-#include"msg_define.h"
+#include"../entity/msg_define.h"
 
 
 

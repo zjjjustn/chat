@@ -1,7 +1,7 @@
 #include"chat_server_controller.h"
 #include"client_list.h"
 #include"msg_send_service.h" 
-#include"msg_define.h"
+#include"../entity/msg_define.h"
 #include"chat_dao.h"
 #include"register_service.h"
 
