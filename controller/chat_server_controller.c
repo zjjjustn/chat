@@ -2,12 +2,20 @@
 #include"client_list.h"
 #include"msg_send_service.h" 
 #include"msg_define.h"
+#include"chat_dao.h"
+#include"register_service.h"
+
 #include<stdio.h>
 
 Link client_head = NULL;
 
 int chat_start_server(const int port,const char *ip)
 {
+    int ret = chat_open_db("/home/ubuntu/working/chat/chat.db");
+    if(ret != 0)
+    {
+        return;
+    }
     int sockfd = chat_socket();
     if(sockfd == -1)
     {
@@ -36,6 +44,8 @@ int chat_start_server(const int port,const char *ip)
        printf("accept client port:%d ip:%s connect\n",c_port,c_ip);
        start_detach_thread(NULL,chat_server_controller,&conn);
     }
+    
+    chat_close_db();
 
 }
 
@@ -84,6 +94,7 @@ void *chat_server_controller(void *arg)
 
     pthread_exit(NULL);
 }
+
 //校验消息头
 int verify_header(struct msg_header header)
 {
@@ -101,12 +112,15 @@ void process_client_msg(int sockfd,const char * content,unsigned short control_m
 {
     switch(control_mask)
     {
-        case LOGIN:
-            break; 
+        case USER_LOGIN:
+            user_login_handle(sockfd,content);
+            break;
         case REGISTER:
+            register_handle(sockfd,content);
             break;
         case MSG_SEND:
             send_msg_handle(sockfd,content);
+            break;
         
         default:
             break;

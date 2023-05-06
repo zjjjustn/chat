@@ -16,6 +16,7 @@ void send_msg_handle(int sockfd,const char * content)
     printf("client %d send %s msg:%s is send_all:%d\n",
         sockfd,msg_struct.user_name,msg_struct.msg,msg_struct.is_send_all);
     
+    
     int fds[1024];
     char send_user[1024]= "\0";
     Link p = client_head;
